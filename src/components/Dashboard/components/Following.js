@@ -2,22 +2,21 @@
 
 import React, { useEffect, useState } from "react";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarAlt, faBroom } from "@fortawesome/free-solid-svg-icons";
+import { hot } from "react-hot-loader/root";
+import { FormattedMessage } from "react-intl";
 
 import difference from "lodash/difference";
 
-// import { useCountUp } from "react-countup";
-import { hot } from "react-hot-loader/root";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCalendarAlt, faBroom } from "@fortawesome/free-solid-svg-icons";
 
-import { Button } from "../../index";
-import { Friend } from "./index";
+import { Button, Friend } from "components";
 
 import {
   cycleTimeframes,
   getInactiveFriends,
   postMultiFriendshipsDestroy,
-} from "../../../utils";
+} from "utils";
 
 type Props = {
   access: Object,
@@ -63,9 +62,14 @@ const Following = (props: Props) => {
       <div className="Following__header">
         <div className="Following__intro">
           <p>
-            You're following
-            <span className="Following__total">{inactive.length}</span> accounts
-            that have not been active in the last
+            <FormattedMessage
+              id="Following.intro"
+              values={{
+                total: (
+                  <span className="Following__total">{inactive.length}</span>
+                ),
+              }}
+            />
             <span
               className="Following__timeframe"
               onClick={() => {
@@ -80,18 +84,18 @@ const Following = (props: Props) => {
         </div>
         {inactive.length ? (
           <div className="Following__actions">
-            <p>What would you want to do next?</p>
+            <FormattedMessage id="Following.actions" />
             <div className="Following__buttons">
               <Button
                 disabled={selected.length ? false : true}
-                label="Unfollow Selected"
+                label={<FormattedMessage id="Following.unfollow--selected" />}
                 onClick={() => {
                   postMultiFriendshipsDestroy(access, selected);
                   setSelected([]); // clear selections
                 }}
               />
               <Button
-                label="Unfollow All"
+                label={<FormattedMessage id="Following.unfollow--all" />}
                 onClick={() => {
                   if (window.confirm(getConfirmMessage(inactive.length))) {
                     postMultiFriendshipsDestroy(
@@ -149,8 +153,12 @@ const Following = (props: Props) => {
             <div className="Following__icon--broom">
               <FontAwesomeIcon icon={faBroom} size="2x" />
             </div>
-            <p>Looks tidy already!</p>
-            <p>Try a different time frame above.</p>
+            <p>
+              <FormattedMessage id="Following.empty__paragraph--1" />
+            </p>
+            <p>
+              <FormattedMessage id="Following.empty__paragraph--2" />
+            </p>
           </div>
         )}
       </div>

@@ -1,10 +1,11 @@
 // @flow
 
 import * as React from "react";
-import { hot } from "react-hot-loader/root";
-import { Link } from "@reach/router";
 
-import { LogOut } from "../index";
+import { Link } from "@reach/router";
+import { hot } from "react-hot-loader/root";
+
+import { LogOut } from "components";
 
 import "./styles.scss";
 
